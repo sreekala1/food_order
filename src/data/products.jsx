@@ -2,24 +2,24 @@ import React from 'react'
 const products = [
   {
     id: 1,
-    name: "Margherita Pizza",
+    name: "Pizza",
     category: "Main Course",
-    image: "/images/pizza.jpg",
-    description: "Classic pizza with tomatoes, mozzarella, and basil.",
+    image: "../images/pizza.jpg",
+    description: "Classic pizza with vegetables, chicken.",
   },
   {
     id: 2,
-    name: "Iced Coffee",
+    name: "Coffee",
     category: "Beverages",
-    image: "/images/iced-coffee.jpg",
-    description: "Chilled coffee with cream and ice.",
+    image: "images/coffee.jpg",
+    description: "Chilled coffee.",
   },
   {
     id: 3,
-    name: "Caesar Salad",
+    name: "Salad",
     category: "Starters",
     image: "/images/salad.jpg",
-    description: "Fresh lettuce, croutons, parmesan, and Caesar dressing.",
+    description: "Fresh vegetable salad.",
   },
 ];
 
