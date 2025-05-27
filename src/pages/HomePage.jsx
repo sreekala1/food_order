@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import products from "../data/products";
 import ProductCard from "../components/ProductCard";
 
@@ -14,7 +15,9 @@ const HomePage = () => {
   );
 
   return (
-    <div className="p-6">
+    <>
+       <div className="p-6">
+
       <h1 className="text-3xl font-bold mb-6">Our Menu</h1>
 
       {/* Search & Filter */}
@@ -48,7 +51,7 @@ const HomePage = () => {
           <p className="col-span-full text-center text-gray-500">No food items found.</p>
         )}
       </div>
-    </div>
+    </div></>
   );
 };
 
