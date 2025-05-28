@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 const initialProducts = [
   { id: 1, name: 'Biriyani', description: 'Spicy and tasty', price: 250 },
-  { id: 2, name: 'Phone', description: 'Latest model', price: 599 },
+  { id: 2, name: 'Manthi', description: 'test', price: 599 },
 ];
 
 const AdminPage = () => {
