@@ -18,4 +18,5 @@ const AdminPanel = () => {
       return false;
     }
     return true;
-  };
+  }
+};
