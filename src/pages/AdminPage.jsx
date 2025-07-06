@@ -1,53 +1,79 @@
-// src/components/AdminPage.js
 import React, { useState } from 'react';
-const initialProducts = [
-  { id: 1, name: 'Biriyani', description: 'Spicy and tasty', price: 250 },
-  { id: 2, name: 'Manthi', description: 'test', price: 599 },
-];
+import products from "../data/products";
 
-const AdminPage = () => {
-  const [products, setProducts] = useState(initialProducts);
-  const [newProduct, setNewProduct] = useState({ name: '', description: '', price: '' });
+function App() {
+  const [items, setItems] = useState(products);
+  const [newName, setNewName] = useState('');
+  const [newPrice, setNewPrice] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewProduct(prev => ({ ...prev, [name]: value }));
+  const addItem = () => {
+    if (!newName || !newPrice) return;
+    const newItem = {
+      id: Date.now(),
+      name: newName,
+      price: Number(newPrice),
+    };
+    setItems([...items, newItem]);
+    setNewName('');
+    setNewPrice('');
   };
 
-  const handleAddProduct = () => {
-    if (!newProduct.name) {
-      alert("Product name is required");
-      return;
-    }
-    const newId = products.length ? products[products.length - 1].id + 1 : 1;
-    setProducts([...products, { id: newId, ...newProduct, price: parseFloat(newProduct.price) }]);
-    setNewProduct({ name: '', description: '', price: '' });
+  const editItem = (id, field, value) => {
+    const updated = items.map(item =>
+      item.id === id ? { ...item, [field]: field === 'price' ? Number(value) : value } : item
+    );
+    setItems(updated);
   };
 
-  const handleDelete = (id) => {
-    setProducts(products.filter(p => p.id !== id));
+  const deleteItem = (id) => {
+    setItems(items.filter(item => item.id !== id));
   };
 
-  return (
-     <>   
-    <div>
-      <h2>Admin Dashboard</h2>
-      <div>
-        <input name="name" placeholder="Name" value={newProduct.name} onChange={handleChange} />
-        <input name="description" placeholder="Description" value={newProduct.description} onChange={handleChange} />
-        <input name="price" placeholder="Price" type="number" value={newProduct.price} onChange={handleChange} />
-        <button onClick={handleAddProduct}>Add Product</button>
-      </div>
+return (
+    <div style={{ padding: 20 }}>
+      <h2></h2>
+
       <ul>
-        {products.map(product => (
-          <li key={product.id}>
-            {product.name} - ${product.price}
-            <button onClick={() => handleDelete(product.id)}>Delete</button>
+        {items.map(item => (
+          <li key={item.id} style={{ marginBottom: 10 }}>
+            <input
+              type="text"
+              value={item.name}
+              onChange={(e) => editItem(item.id, 'name', e.target.value)}
+              style={{ marginRight: 10 }}
+            />
+            ₹
+            <input
+              type="number"
+              value={item.price}
+              onChange={(e) => editItem(item.id, 'price', e.target.value)}
+              style={{ margin: '0 10px' }}
+            />
+            <button onClick={() => deleteItem(item.id)}>Delete</button>
           </li>
         ))}
       </ul>
-    </div> </>
-  );
-};
 
-export default AdminPage;
+      <div style={{ marginTop: 20 }}>
+        <input
+          type="text"
+          placeholder="New item name"
+          value={newName}
+          onChange={(e) => setNewName(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Price"
+          value={newPrice}
+          onChange={(e) => setNewPrice(e.target.value)}
+          style={{ margin: '0 10px' }}
+        />
+        <button onClick={addItem}>Add Item</button>
+      </div>
+
+     
+    </div>
+  );
+}
+
+export default App;
