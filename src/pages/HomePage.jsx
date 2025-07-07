@@ -36,7 +36,7 @@ const HomePage = () => {
               onClick={() => setCategory(cat)}
               className={`btn ${category === cat ? "btn-primary" : "btn-outline"}`}
             >
-              {cat}
+              {cat} &nbsp; | &nbsp;
             </button>
           ))}
         </div>

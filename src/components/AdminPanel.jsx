@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import initialData from from "../data/products.json";
 
 
-function App() {
+function AdminPanel() {
   const [items, setItems] = useState(initialData);
   const [newName, setNewName] = useState('');
   const [newPrice, setNewPrice] = useState('');
@@ -87,4 +87,4 @@ function App() {
   );
 }
 
-export default App;
+export default AdminPanel;
