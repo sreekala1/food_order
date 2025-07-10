@@ -1,10 +1,38 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-
+import { useState } from "react";
 import products from "../data/products"; // Assuming products is an array of product objects
 const ProductDetailPage = () => {
   const { id } = useParams();
   const product = products.find((p) => p.id == id);
+   const [cart, setCart] = useState([]);
+
+  const handleAddToCart = () => {
+    setCart((prevCart) => {
+      const exists = prevCart.find((item) => item.id === product.id);
+      if (exists) {
+        return prevCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
+    alert("Added to cart!");
+  };
+
+  if (!product) {
+    return (
+      <div className="container mx-auto p-4 text-center">
+        <h2 className="text-2xl font-bold mb-4">Product Not Found</h2>
+      </div>
+    );
+  }
+
+
+
 console.log(products);
   console.log(product); // Check if product is found
   if (!product) {
@@ -28,7 +56,7 @@ console.log(products);
           <p className="mb-4">{product.description}</p>
           <div className="flex justify-between items-center mb-4">
             <span className="text-2xl font-semibold">₹{product.price}</span>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full dark:bg-blue-700 dark:hover:bg-blue-900 transition">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full dark:bg-blue-700 dark:hover:bg-blue-900 transition"  onClick={handleAddToCart}>
               Add to Cart
             </button>
           </div>
