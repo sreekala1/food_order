@@ -29,49 +29,58 @@ function App() {
     setItems(items.filter(item => item.id !== id));
   };
 
-return (
-    <div style={{ padding: 20 }}>
-      <h2></h2>
+  return (
+    <div className="min-h-screen p-6 bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
+      <h2 className="text-2xl font-bold mb-6">Product List</h2>
 
-      <ul>
+      <ul className="space-y-4">
         {items.map(item => (
-          <li key={item.id} style={{ marginBottom: 10 }}>
+          <li key={item.id} className="flex items-center gap-4">
             <input
               type="text"
               value={item.name}
               onChange={(e) => editItem(item.id, 'name', e.target.value)}
-              style={{ marginRight: 10 }}
+              className="p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-1/3"
             />
             ₹
             <input
               type="number"
               value={item.price}
               onChange={(e) => editItem(item.id, 'price', e.target.value)}
-              style={{ margin: '0 10px' }}
+              className="p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-24"
             />
-            <button onClick={() => deleteItem(item.id)}>Delete</button>
+            <button
+              onClick={() => deleteItem(item.id)}
+              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
 
-      <div style={{ marginTop: 20 }}>
+      <div className="mt-8 flex flex-wrap items-center gap-4">
         <input
           type="text"
           placeholder="New item name"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
+          className="p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-1/3"
         />
         <input
           type="number"
           placeholder="Price"
           value={newPrice}
           onChange={(e) => setNewPrice(e.target.value)}
-          style={{ margin: '0 10px' }}
+          className="p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-24"
         />
-        <button onClick={addItem}>Add Item</button>
+        <button
+          onClick={addItem}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Add Item
+        </button>
       </div>
-
-     
     </div>
   );
 }

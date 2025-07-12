@@ -1,22 +1,8 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext"; // <-- import the context
 
 const Header = () => {
-  // Theme state
-  const [theme, setTheme] = useState("light");
-
-  // Theme management
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
+  const { theme, toggleTheme } = useTheme(); // <-- use context
 
   return (
     <header className="bg-gradient-to-r from-blue-600 to-purple-700 dark:from-gray-900 dark:to-gray-700 text-white p-4 shadow-lg sticky top-0 z-40">

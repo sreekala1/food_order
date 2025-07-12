@@ -1,0 +1,132 @@
+✅ 1. Create Theme Context (Global Theme Management)
+🔧 src/context/ThemeContext.jsx
+jsx
+Copy
+Edit
+import { createContext, useEffect, useState, useContext } from "react";
+
+const ThemeContext = createContext();
+
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "light";
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === "light" ? "dark" : "light"));
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+export const useTheme = () => useContext(ThemeContext);
+✅ 2. Wrap Your App with ThemeProvider
+🔧 src/main.jsx
+jsx
+Copy
+Edit
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </BrowserRouter>
+  </React.StrictMode>
+);
+✅ 3. Use Dark/Light Toggle Anywhere (e.g. Header)
+🔧 src/components/Header.jsx
+jsx
+Copy
+Edit
+import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
+
+const Header = () => {
+  const { theme, toggleTheme } = useTheme();
+
+  return (
+    <header className="bg-gradient-to-r from-blue-600 to-purple-700 dark:from-gray-900 dark:to-gray-700 text-white p-4 shadow-lg sticky top-0 z-40">
+      <div className="container mx-auto flex justify-between items-center">
+        <h1 className="text-3xl font-bold">
+          <Link to="/">MyStore</Link>
+        </h1>
+        <nav className="flex items-center space-x-4">
+          <Link to="/" className="hover:underline">Products</Link>
+          <Link to="/admin" className="hover:underline">Admin</Link>
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle Theme"
+            className="p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition"
+          >
+            {theme === "dark" ? (
+              <svg className="h-6 w-6 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M12 3v1m0 16v1m9-9h1M3 12H2m15.325-7.757l-.707-.707M6.343
+                  17.657l-.707.707M17.657 6.343l.707-.707M6.343
+                  6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            ) : (
+              <svg className="h-6 w-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M20.354 15.354A9 9 0 018.646 3.646
+                  9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            )}
+          </button>
+        </nav>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
+✅ 4. Apply Global Themed Background in App.jsx
+🔧 src/App.jsx
+jsx
+Copy
+Edit
+function App() {
+  return (
+    <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+      {/* Your header and routes */}
+    </div>
+  );
+}
+✅ 5. Tailwind Dark Mode Setup
+🔧 tailwind.config.js
+js
+Copy
+Edit
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
